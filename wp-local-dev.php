@@ -28,7 +28,7 @@ function webfacing_config_dir(): ?string {
 	return $dir;
 }
 
-add_filter( 'admin_menu', function() {
+add_action( 'admin_menu', function() {
 	$plugin_data = get_plugin_data( __FILE__, false, false );
 	$const_dev   = 'WP_LOCAL_DEV';
 	$text_domain = $plugin_data['TextDomain'];
