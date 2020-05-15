@@ -9,6 +9,7 @@
  * Requires at least:	5.1.1
  * Requires PHP:        7.1
  * Tested up to:		5.4.1
+ * Domain Path:         /languages
  * Text Domain:         wp-local-dev
  *
  * @author knutsp
