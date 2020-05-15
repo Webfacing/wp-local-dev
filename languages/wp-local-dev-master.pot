@@ -3,7 +3,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Local Development\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-14 22:31+0000\n"
+"POT-Creation-Date: 2020-05-15 05:29+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: \n"
@@ -13,43 +13,49 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Generator: Loco https://localise.biz/\n"
-"X-Loco-Version: 2.3.3; wp-5.4.1"
+"X-Loco-Version: 2.3.4; wp-5.4.1"
 
-#: local-dev.php:31
-msgid "Local Development"
-msgstr ""
-
-#: local-dev.php:34
-msgid "Set or change a few constants in %s."
-msgstr ""
-
-#: local-dev.php:41
-msgid "Constant successfylly set."
-msgstr ""
-
-#: local-dev.php:41
-msgid "There was an error setting the constant."
-msgstr ""
-
-#: local-dev.php:43
-msgid "You don't have access to this page."
-msgstr ""
-
-#. Description of the plugin
-msgid "📆 By Nettvendt."
+#: wp-local-dev.php:51
+#, php-format
+msgid "Constant %1$s successfully set to %2$s."
 msgstr ""
 
 #. URI of the plugin
 msgid "https://nettvendt.no/"
 msgstr ""
 
-#. Author of the plugin
-msgid "Knut Sparhell"
-msgstr ""
-
 #. Author URI of the plugin
 msgid "https://profiles.wordpress.org/knutsp/"
 msgstr ""
 
+#. Author of the plugin
+msgid "Knut Sparhell"
+msgstr ""
+
+#. Name of the plugin
+msgid "Local Development"
+msgstr ""
+
+#: wp-local-dev.php:72
+#, php-format
 msgid "Make the lower part of your %s file like this"
+msgstr ""
+
+#: wp-local-dev.php:41
+#, php-format
+msgid "Set or change a few constants in %s."
+msgstr ""
+
+#: wp-local-dev.php:52
+#, php-format
+msgid "There was an error setting the constant %s."
+msgstr ""
+
+#: wp-local-dev.php:54
+#, php-format
+msgid "You are not allowed to perform this action%s."
+msgstr ""
+
+#. Description of the plugin
+msgid "🕸️ By Nettvendt."
 msgstr ""

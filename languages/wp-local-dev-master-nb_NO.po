@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Local Development\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-05-14 22:31+0000\n"
-"PO-Revision-Date: 2020-05-15 01:20+0000\n"
+"POT-Creation-Date: 2020-05-15 05:29+0000\n"
+"PO-Revision-Date: 2020-05-15 05:34+0000\n"
 "Last-Translator: Knut Sparhell\n"
 "Language-Team: Norsk bokmål\n"
 "Language: nb_NO\n"
@@ -14,41 +14,46 @@ msgstr ""
 "X-Generator: Loco https://localise.biz/\n"
 "X-Loco-Version: 2.3.4; wp-5.4.1"
 
-#: local-dev.php:31
-msgid "Local Development"
-msgstr "Lokal utvikling"
-
-#: local-dev.php:34
-msgid "Set or change a few constants in %s."
-msgstr "Sett eller endre noen få  konstanter i %s."
-
-#: local-dev.php:41
-msgid "Constant successfylly set."
-msgstr "Konstant satt."
-
-#: local-dev.php:41
-msgid "There was an error setting the constant."
-msgstr "Det oppsto en feil ved setting av konstant."
-
-#: local-dev.php:43
-msgid "You don't have access to this page."
-msgstr "Du har ikke tilgang til denne siden."
-
-#. Description of the plugin
-msgid "📆 By Nettvendt."
-msgstr "📆 Av Nettvendt."
+#: wp-local-dev.php:51
+#, php-format
+msgid "Constant %1$s successfully set to %2$s."
+msgstr "Konstanten %1$s satt til %2$s."
 
 #. URI of the plugin
 msgid "https://nettvendt.no/"
 msgstr "https://nettvendt.no/"
 
-#. Author of the plugin
-msgid "Knut Sparhell"
-msgstr "Knut Sparhell"
-
 #. Author URI of the plugin
 msgid "https://profiles.wordpress.org/knutsp/"
 msgstr "https://profiles.wordpress.org/knutsp/"
 
+#. Author of the plugin
+msgid "Knut Sparhell"
+msgstr "Knut Sparhell"
+
+msgid "Local Development"
+msgstr "Lokal utvikling"
+
+#: wp-local-dev.php:72
+#, php-format
 msgid "Make the lower part of your %s file like this"
 msgstr "Gjør nedre del av din %s-fil som dette"
+
+#: wp-local-dev.php:41
+#, php-format
+msgid "Set or change a few constants in %s."
+msgstr "Sett eller endre noen få  konstanter i %s."
+
+#: wp-local-dev.php:52
+#, php-format
+msgid "There was an error setting the constant %s."
+msgstr "Det oppsto en feil ved setting av konstanten %s."
+
+#: wp-local-dev.php:54
+#, php-format
+msgid "You are not allowed to perform this action%s."
+msgstr "Du har ikke lov til å utføre denne handlingen%s."
+
+#. Description of the plugin
+msgid "🕸️ By Nettvendt."
+msgstr "🕸️ Av Nettvendt."

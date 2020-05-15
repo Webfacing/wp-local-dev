@@ -1,7 +1,7 @@
 <?php
 /**
  * Plugin Name:     	Local Development
- * Description:     	📆 By Nettvendt.
+ * Description:     	🕸️ By Nettvendt.
  * Plugin URI:      	https://nettvendt.no/
  * Version:         	1.1
  * Author:          	Knut Sparhell
@@ -17,10 +17,10 @@
 
 function webfacing_config_dir(): ?string {
 	$config_file = 'wp-config.php';
-	$parent_dir = dirname( ABSPATH );
+	$parent_dir = trailingslashit( dirname( ABSPATH ) );
 	if ( file_exists( ABSPATH . $config_file ) ) {
 		$dir = ABSPATH;
-	} elseif ( @file_exists( $parent_dir . '/' . $config_file ) && ! @file_exists( $parent_dir . '/wp-settings.php' ) ) {
+	} elseif ( @file_exists( $parent_dir . $config_file ) && ! @file_exists( $parent_dir . 'wp-settings.php' ) ) {
 		$dir = $parent_dir;
 	} else {
 		$dir = null;
@@ -29,25 +29,29 @@ function webfacing_config_dir(): ?string {
 }
 
 add_filter( 'admin_menu', function() {
-	$constant = 'WP_LOCAL_DEV';
-	$textdomain = 'wp-local-dev-master';
-	$const_user = 'WEBFACING_DEVELOPER_LOGIN';
-	$restricted_user = defined( $const_user ) ? constant( $const_user ) : false;
-	load_plugin_textdomain( $textdomain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
-	add_management_page( __( 'Local Development', $textdomain ), __( 'Local Development', $textdomain ), 'manage_options', $textdomain, function() use( $constant, $textdomain, $const_user, $restricted_user ) { ?>
+	$plugin_data = get_plugin_data( __FILE__, false, false );
+	$const_dev   = 'WP_LOCAL_DEV';
+	$text_domain = $plugin_data['TextDomain'];
+	$const_user  = 'WP_DEV_LOGIN';
+	$restr_user  = defined( $const_user ) ? constant( $const_user ) : false;
+	load_plugin_textdomain( $text_domain, false, dirname( plugin_basename( __FILE__ ) ) . $plugin_data['DomainPath'] );
+	add_management_page( __( $plugin_data['Name'], $text_domain ), __( $plugin_data['Name'], $text_domain ), 'manage_options', $text_domain, function() use( $const_dev, $text_domain, $const_user, $restr_user ) { ?>
 		<div class="wrap">
 		<h1><?=get_admin_page_title()?></h1>
-		<p><?=sprintf(__('Set or change a few constants in %s.',$textdomain),'<code>wp-config.php</code>')?></p>
+		<p><?=sprintf(__('Set or change a few constants in %s.',$text_domain),'<code>wp-config.php</code>')?></p>
 <?php
-		$has_access = current_user_can( 'install_plugins' ) && ( ! $restricted_user || wp_get_current_user()->user_login == $restricted_user );
-		$local_dev_file = webfacing_config_dir() . $textdomain . '.php';
+		$has_access = current_user_can( 'install_plugins' ) && ( ! $restr_user || wp_get_current_user()->user_login == $restr_user );
+		$local_dev_file = webfacing_config_dir() . $text_domain . '.php';
 		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			if ( $has_access ) {
-				$sub_local_dev = ! empty( $_POST['local_dev'] );
-				$saved = file_put_contents( $local_dev_file, '<?php const ' . $constant . ' = ' . ( $sub_local_dev ? 'true' : 'false' ) . ';' . PHP_EOL );
-				echo '<p>', $saved ? __( 'Constant successfylly set.', $textdomain ) : __( 'There was an error setting the constant.', $textdomain ), '</p>';
+				$sub_local_dev = ! empty( $_POST[ $const_dev ] );
+				$value = $sub_local_dev ? 'true' : 'false';
+				$saved = file_put_contents( $local_dev_file, '<?php const ' . $const_dev . ' = ' . $value . ';' . PHP_EOL );
+				echo '<p>', $saved ?
+					sprintf( __( 'Constant %1$s successfully set to %2$s.', $text_domain ), '<code>' . $const_dev . '</code>', '<em>' . $value . '</em>') :
+					sprintf( __( 'There was an error setting the constant %s.', $text_domain ), '<code>' . $const_dev . '</code>' ), '</p>';
 			} else {
-				wp_die( __( "You don't have access to this page.", $textdomain ) . ' ' . $restricted_user ) .'.';
+				wp_die( sprintf( __( "You are not allowed to perform this action%s.", $text_domain ), ', ' . $restr_user ) );
 			}
 		}
 		$content = file_get_contents( $local_dev_file );
@@ -55,17 +59,17 @@ add_filter( 'admin_menu', function() {
 			<form action="<?=add_query_arg(['page'=>esc_attr($_GET['page'])],$_SERVER['REQUEST_URI'])?>" method="post">
 				<p>
 					<fieldset>
-						<label for="local-dev">
-							<input type="checkbox" id="local-dev" name="local_dev" value="1" <?=checked($local_dev,true,true)?>/> <code><?=$constant?></code>
+						<label for="<?=$text_domain?>">
+							<input type="checkbox" id="<?=$text_domain?>" name="<?=$const_dev?>" value="1" <?=checked($local_dev,true,true)?>/> <code><?=$const_dev?></code>
 						</label>
 					</fieldset>
 				</p>
 				<button type="submit" class="button-primary"<?=disabled($has_access,false,true)?>><?=__('Save Changes')?></button>
 			</form>
 <?php
-		if ( ! defined( $constant ) || constant( $constant ) != $local_dev ) { ?>
+		if ( ! defined( $const_dev ) || constant( $const_dev ) != $local_dev ) { ?>
 			<hr style="height: 2em;" />
-			<h2><?=sprintf(__('Make the lower part of your %s file like this',$textdomain),'<code>wp-config.php</code>')?></h2>
+			<h2><?=sprintf(__('Make the lower part of your %s file like this',$text_domain),'<code>wp-config.php</code>')?></h2>
 			<pre style="background-color: white; padding: 0 1em; width: 60em; font-family: 'Lucida Console';">/**
  * For developers: WordPress debugging mode.
  *
@@ -78,9 +82,9 @@ add_filter( 'admin_menu', function() {
  *
  * @link https://codex.wordpress.org/Debugging_in_WordPress
  */
-<span style="background-color: yellow;">include '<?=$textdomain?>.php';</span>
-<span style="background-color: yellow;">const <?=$const_user?>      = '<?=$restricted_user?$restricted_user:wp_get_current_user()->user_login?>';</span>
-const WP_DEBUG                       = <span style="background-color: yellow;"><?=$constant?>;</span>
+<span style="background-color: yellow;">include '<?=$text_domain?>.php';</span>
+<span style="background-color: yellow;">const <?=$const_user?>		      = '<?=$restr_user?$restr_user:wp_get_current_user()->user_login?>';</span>
+const WP_DEBUG                       = <span style="background-color: yellow;"><?=$const_dev?>;</span>
 const WP_DISABLE_FATAL_ERROR_HANDLER =   WP_DEBUG;
 const SCRIPT_DEBUG                   =   WP_DEBUG;
 const SAVEQUERIES                    =   WP_DEBUG;
@@ -94,6 +98,7 @@ const CONCATENATE_SCRIPTS            = ! WP_DEBUG;
 const COMPRESS_SCRIPTS               = ! WP_DEBUG;
 const COMPRESS_CSS                   = ! WP_DEBUG;
 const CORE_UPGRADE_SKIP_NEW_BUNDLED  = ! WP_DEBUG;
+const IVBR_SMTP_ACCESS               = WP_DEBUG ?: 'hidden';
 const WP_DEBUG_DISPLAY               = false;
 const DISALLOW_FILE_EDIT             = true;
 const ALLOW_UNFILTERED_UPLOADS       = true;
