@@ -7,8 +7,8 @@
  * Author:				Knut Sparhell
  * Author URI:			https://profiles.wordpress.org/knutsp/
  * Requires at least:	5.1.1
- * Requires PHP:        7.2
- * Tested up to:		5.2.3
+ * Requires PHP:        7.1
+ * Tested up to:		5.4.1
  * Text Domain:         wp-local-dev
  *
  * @author knutsp
@@ -28,18 +28,18 @@ function webfacing_config_dir(): ?string {
 }
 
 add_filter( 'admin_menu', function() {
+	$constant = 'WP_LOCAL_DEV';
 	$textdomain = 'wp-local-dev';
 	$const_user = 'WEBFACING_DEVELOPER_LOGIN';
 	$restricted_user = defined( $const_user ) ? constant( $const_user ) : false;
-	add_management_page( __( 'Local Development', $textdomain ), __( 'Local Development', $textdomain ), 'manage_options', $textdomain, function() use( $textdomain, $const_user, $restricted_user ) { ?>
+	add_management_page( __( 'Local Development', $textdomain ), __( 'Local Development', $textdomain ), 'manage_options', $textdomain, function() use( $constant, $textdomain, $const_user, $restricted_user ) { ?>
 		<div class="wrap">
 		<h1><?=get_admin_page_title()?></h1>
 		<p><?=sprintf(__('Set or change a few constants in %s.',$textdomain),'<code>wp-config.php</code>')?></p>
 <?php
-		$constant = 'WP_LOCAL_DEV';
 		$has_access = current_user_can( 'install_plugins' ) && ( ! $restricted_user || wp_get_current_user()->user_login == $restricted_user );
+		$local_dev_file = webfacing_config_dir() . '/' . $textdomain . '.php';
 		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
-			$local_dev_file = webfacing_config_dir() . '/' . $textdomain . '.php';
 			if ( $has_access ) {
 				$sub_local_dev = ! empty( $_POST['local_dev'] );
 				$saved = file_put_contents( $local_dev_file, '<?php const ' . $constant . ' = ' . ( $sub_local_dev ? 'true' : 'false' ) . ';' . PHP_EOL );
@@ -60,6 +60,8 @@ add_filter( 'admin_menu', function() {
 				</p>
 				<button type="submit" class="button-primary"<?=disabled($has_access,false,true)?>><?=__('Save Changes')?></button>
 			</form>
+<?php
+		if ( ! defined( $constant ) || constant( $constant ) != $local_dev ) { ?>
 			<hr style="height: 2em;" />
 			<h2><?=sprintf(__('Make the lower part of your %s file like this',$textdomain),'<code>wp-config.php</code>')?></h2>
 			<pre style="background-color: white; padding: 0 1em; width: 60em; font-family: 'Lucida Console';">/**
@@ -74,7 +76,7 @@ add_filter( 'admin_menu', function() {
  *
  * @link https://codex.wordpress.org/Debugging_in_WordPress
  */
-<span style="background-color: yellow;">@include './<?=$textdomain?>';</span>
+<span style="background-color: yellow;">include '<?=$textdomain?>.php';</span>
 <span style="background-color: yellow;">const <?=$const_user?>      = '<?=$restricted_user?$restricted_user:wp_get_current_user()->user_login?>';</span>
 const WP_DEBUG                       = <span style="background-color: yellow;"><?=$constant?>;</span>
 const WP_DISABLE_FATAL_ERROR_HANDLER =   WP_DEBUG;
@@ -102,7 +104,8 @@ const WP_DEBUG_LOG                   = __DIR__ . '/php.log';
 @ini_set( 'error_log', WP_DEBUG_LOG );
 
 /* That's all, stop editing! Happy publishing. */</pre>
-			</textarea>
+<?php
+		} ?>
 		</div>
 <?php
 	}, 9999 );
