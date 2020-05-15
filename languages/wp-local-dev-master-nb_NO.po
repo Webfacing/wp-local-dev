@@ -3,7 +3,7 @@ msgstr ""
 "Project-Id-Version: Local Development\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2020-05-15 05:29+0000\n"
-"PO-Revision-Date: 2020-05-15 05:34+0000\n"
+"PO-Revision-Date: 2020-05-15 06:40+0000\n"
 "Last-Translator: Knut Sparhell\n"
 "Language-Team: Norsk bokmål\n"
 "Language: nb_NO\n"
@@ -42,7 +42,7 @@ msgstr "Gjør nedre del av din %s-fil som dette"
 #: wp-local-dev.php:41
 #, php-format
 msgid "Set or change a few constants in %s."
-msgstr "Sett eller endre noen få  konstanter i %s."
+msgstr "Sett eller endre noen få konstanter i %s."
 
 #: wp-local-dev.php:52
 #, php-format
