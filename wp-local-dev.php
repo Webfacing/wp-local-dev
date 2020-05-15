@@ -1,16 +1,16 @@
 <?php
 /**
- * Plugin Name:			Local Development
- * Description:			📆 By Nettvendt.
- * Plugin URI:          https://nettvendt.no/
- * Version:				1.1
- * Author:				Knut Sparhell
- * Author URI:			https://profiles.wordpress.org/knutsp/
+ * Plugin Name:     	Local Development
+ * Description:     	📆 By Nettvendt.
+ * Plugin URI:      	https://nettvendt.no/
+ * Version:         	1.1
+ * Author:          	Knut Sparhell
+ * Author URI:      	https://profiles.wordpress.org/knutsp/
  * Requires at least:	4.9
- * Requires PHP:        7.1
- * Tested up to:		5.4.1
- * Domain Path:         /languages
- * Text Domain:         wp-local-dev-master
+ * Requires PHP:    	7.1
+ * Tested up to:    	5.4.1
+ * Domain Path:     	/languages
+ * Text Domain:     	wp-local-dev-master
  *
  * @author knutsp
  */
@@ -40,7 +40,7 @@ add_filter( 'admin_menu', function() {
 		<p><?=sprintf(__('Set or change a few constants in %s.',$textdomain),'<code>wp-config.php</code>')?></p>
 <?php
 		$has_access = current_user_can( 'install_plugins' ) && ( ! $restricted_user || wp_get_current_user()->user_login == $restricted_user );
-		$local_dev_file = webfacing_config_dir() . '/' . $textdomain . '.php';
+		$local_dev_file = webfacing_config_dir() . $textdomain . '.php';
 		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			if ( $has_access ) {
 				$sub_local_dev = ! empty( $_POST['local_dev'] );
