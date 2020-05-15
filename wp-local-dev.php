@@ -10,7 +10,7 @@
  * Requires PHP:        7.1
  * Tested up to:		5.4.1
  * Domain Path:         /languages
- * Text Domain:         wp-local-dev
+ * Text Domain:         wp-local-dev-master
  *
  * @author knutsp
  */
@@ -30,7 +30,7 @@ function webfacing_config_dir(): ?string {
 
 add_filter( 'admin_menu', function() {
 	$constant = 'WP_LOCAL_DEV';
-	$textdomain = 'wp-local-dev';
+	$textdomain = 'wp-local-dev-master';
 	$const_user = 'WEBFACING_DEVELOPER_LOGIN';
 	$restricted_user = defined( $const_user ) ? constant( $const_user ) : false;
 	add_management_page( __( 'Local Development', $textdomain ), __( 'Local Development', $textdomain ), 'manage_options', $textdomain, function() use( $constant, $textdomain, $const_user, $restricted_user ) { ?>
