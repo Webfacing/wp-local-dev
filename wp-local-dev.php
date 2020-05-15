@@ -3,10 +3,10 @@
  * Plugin Name:			Local Development
  * Description:			📆 By Nettvendt.
  * Plugin URI:          https://nettvendt.no/
- * Version:				1.0
+ * Version:				1.1
  * Author:				Knut Sparhell
  * Author URI:			https://profiles.wordpress.org/knutsp/
- * Requires at least:	5.1.1
+ * Requires at least:	4.9
  * Requires PHP:        7.1
  * Tested up to:		5.4.1
  * Domain Path:         /languages
@@ -33,6 +33,7 @@ add_filter( 'admin_menu', function() {
 	$textdomain = 'wp-local-dev-master';
 	$const_user = 'WEBFACING_DEVELOPER_LOGIN';
 	$restricted_user = defined( $const_user ) ? constant( $const_user ) : false;
+	load_plugin_textdomain( $textdomain, false, dirname( plugin_basename( __FILE__ ) ) . '/languages' );
 	add_management_page( __( 'Local Development', $textdomain ), __( 'Local Development', $textdomain ), 'manage_options', $textdomain, function() use( $constant, $textdomain, $const_user, $restricted_user ) { ?>
 		<div class="wrap">
 		<h1><?=get_admin_page_title()?></h1>
