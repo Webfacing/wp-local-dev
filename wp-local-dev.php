@@ -83,7 +83,7 @@ add_filter( 'admin_menu', function() {
  * @link https://codex.wordpress.org/Debugging_in_WordPress
  */
 <span style="background-color: yellow;">include '<?=$text_domain?>.php';</span>
-<span style="background-color: yellow;">const <?=$const_user?>		      = '<?=$restr_user?$restr_user:wp_get_current_user()->user_login?>';</span>
+<span style="background-color: yellow;">const <?=$const_user?>		     = '<?=$restr_user?$restr_user:wp_get_current_user()->user_login?>';</span>
 const WP_DEBUG                       = <span style="background-color: yellow;"><?=$const_dev?>;</span>
 const WP_DISABLE_FATAL_ERROR_HANDLER =   WP_DEBUG;
 const SCRIPT_DEBUG                   =   WP_DEBUG;
