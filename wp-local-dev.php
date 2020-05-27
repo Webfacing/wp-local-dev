@@ -51,7 +51,7 @@ add_action( 'admin_menu', function() {
 					sprintf( __( 'Constant %1$s successfully set to %2$s.', $text_domain ), '<code>' . $const_dev . '</code>', '<em>' . $value . '</em>') :
 					sprintf( __( 'There was an error setting the constant %s.', $text_domain ), '<code>' . $const_dev . '</code>' ), '</p>';
 			} else {
-				wp_die( sprintf( __( "You are not allowed to perform this action%s.", $text_domain ), ', ' . $restr_user ) );
+				wp_die( sprintf( __( 'You are not allowed to perform this action%s.', $text_domain ), ', ' . $restr_user ) );
 			}
 		}
 		$content = file_get_contents( $local_dev_file );
