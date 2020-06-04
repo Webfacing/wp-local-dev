@@ -3,7 +3,7 @@
  * Plugin Name:     	Local Development
  * Description:     	🕸️ By Nettvendt.
  * Plugin URI:      	https://nettvendt.no/
- * Version:         	1.1
+ * Version:         	2.0
  * Author:          	Knut Sparhell
  * Author URI:      	https://profiles.wordpress.org/knutsp/
  * Requires at least:	4.9
@@ -41,7 +41,7 @@ add_action( 'admin_menu', function() {
 		<p><?=sprintf(__('Set or change a few constants in %s.',$text_domain),'<code>wp-config.php</code>')?></p>
 <?php
 		$has_access = current_user_can( 'install_plugins' ) && ( ! $restr_user || wp_get_current_user()->user_login == $restr_user );
-		$local_dev_file = webfacing_config_dir() . $text_domain . '.php';
+		$local_dev_file = webfacing_config_dir() . 'wp-local-dev.' . $_SERVER['HTTP_HOST'] . '.php';
 		if ( $_SERVER['REQUEST_METHOD'] == 'POST' ) {
 			if ( $has_access ) {
 				$sub_local_dev = ! empty( $_POST[ $const_dev ] );
@@ -55,7 +55,8 @@ add_action( 'admin_menu', function() {
 			}
 		}
 		$content = file_get_contents( $local_dev_file );
-		$local_dev = trim( end( explode( ' ', $content ) ) ) === 'true;'; ?>
+		$content = explode( ' ', $content );
+		$local_dev = trim( end( $content ) ) === 'true;'; ?>
 			<form action="<?=add_query_arg(['page'=>esc_attr($_GET['page'])],$_SERVER['REQUEST_URI'])?>" method="post">
 				<p>
 					<fieldset>
@@ -82,7 +83,7 @@ add_action( 'admin_menu', function() {
  *
  * @link https://codex.wordpress.org/Debugging_in_WordPress
  */
-<span style="background-color: yellow;">include '<?=$text_domain?>.php';</span>
+<span style="background-color: yellow;">include 'wp-local-dev.' . $_SERVER['HTTP_HOST'] . '.php';</span>
 <span style="background-color: yellow;">const <?=$const_user?>		     = '<?=$restr_user?$restr_user:wp_get_current_user()->user_login?>';</span>
 const WP_DEBUG                       = <span style="background-color: yellow;"><?=$const_dev?>;</span>
 const WP_DISABLE_FATAL_ERROR_HANDLER =   WP_DEBUG;
